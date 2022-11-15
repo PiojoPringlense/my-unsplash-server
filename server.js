@@ -97,6 +97,6 @@ app.delete("/delete_image", async (req, res) => {
 	res.json(await deleteImage(id));
 });
 
-app.listen(5000, () => {
+app.listen(80, () => {
 	console.log(`Server started...`);
 });
