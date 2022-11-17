@@ -32,11 +32,11 @@ function getImagesByLabel(labels) {
 
 function uploadImage(label, imageUrl) {
 	try {
-		console.log("Image uploaded");
 		const allImages = getAllImages();
-		const newId = parseInt(allImages.at(-1).id) + 1;
+		const newId = parseInt(allImages[allImages.length - 1].id) + 1;
 		allImages.push({ id: newId, label, imageUrl });
 		results = [...allImages];
+		console.log("Image uploaded");
 		return 1;
 	} catch {
 		console.log("Error connecting");
