@@ -34,7 +34,7 @@ function uploadImage(label, imageUrl) {
 	try {
 		console.log("Image uploaded");
 		const allImages = getAllImages();
-		const newId = allImages.at(-1).id + 1;
+		const newId = parseInt(allImages.at(-1).id) + 1;
 		allImages.push({ id: newId, label, imageUrl });
 		results = [...allImages];
 		return 1;
@@ -47,7 +47,7 @@ function uploadImage(label, imageUrl) {
 function deleteImage(id) {
 	try {
 		const allImages = getAllImages();
-		results = allImages.filter((image) => image.id !== id);
+		results = allImages.filter((image) => parseInt(image.id) !== parseInt(id));
 		console.log("Image deleted");
 		return 1;
 	} catch {
