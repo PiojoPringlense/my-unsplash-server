@@ -2,9 +2,10 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 
+let results = JSON.parse(fs.readFileSync("test.json"));
+
 function getAllImages() {
 	try {
-		const results = JSON.parse(fs.readFileSync("test.json"));
 		console.log("File reading OK");
 		return results;
 	} catch {
@@ -20,10 +21,9 @@ function getImagesByLabel(labels) {
 		const regexQuery = new RegExp(regexString, "ig");
 
 		const allImages = getAllImages();
-		const results = allImages.filter((image) => image.label.match(regexQuery) !== null);
 
 		console.log("Get by label OK");
-		return results;
+		return allImages.filter((image) => image.label.match(regexQuery) !== null);
 	} catch {
 		console.log("Error connecting");
 		return [];
@@ -36,7 +36,7 @@ function uploadImage(label, imageUrl) {
 		const allImages = getAllImages();
 		const newId = allImages.at(-1).id + 1;
 		allImages.push({ id: newId, label, imageUrl });
-		fs.writeFileSync("test.json", JSON.stringify(allImages));
+		results = [...allImages];
 		return 1;
 	} catch {
 		console.log("Error connecting");
@@ -47,8 +47,7 @@ function uploadImage(label, imageUrl) {
 function deleteImage(id) {
 	try {
 		const allImages = getAllImages();
-		const results = allImages.filter((image) => image.id !== id);
-		fs.writeFileSync("test.json", JSON.stringify(results));
+		results = allImages.filter((image) => image.id !== id);
 		console.log("Image deleted");
 		return 1;
 	} catch {
